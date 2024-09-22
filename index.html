@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Do You Like Me?</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            width: 90%;
+            max-width: 500px;
+            height: auto;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            position: relative;
+            z-index: 1; /* Above leaf animations */
+        }
+
+        #yesButton {
+            background-color: #28a745;
+            color: white;
+        }
+
+        #yesButton:hover {
+            background-color: #218838;
+        }
+
+        #noButton {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        /* Leaf animation styles */
+        .leaf {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: green;
+            border-radius: 50%;
+            animation: leaf-float 4s infinite;
+        }
+
+        @keyframes leaf-float {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-20px); }
+        }
+
+        /* Positions for leaves */
+        .leaf:nth-child(1) { left: 10%; top: 0; animation-delay: 0s; }
+        .leaf:nth-child(2) { left: 30%; top: 0; animation-delay: 1s; }
+        .leaf:nth-child(3) { left: 50%; top: 0; animation-delay: 2s; }
+        .leaf:nth-child(4) { left: 70%; top: 0; animation-delay: 3s; }
+        .leaf:nth-child(5) { left: 90%; top: 0; animation-delay: 4s; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Do you like me?</h1>
+        <div class="buttons">
+            <button id="yesButton">Yes</button>
+            <button id="noButton">No</button>
+        </div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+    </div>
+
+    <script>
+        document.getElementById('yesButton').addEventListener('click', function () {
+            alert("Yey! I like you too!");
+        });
+
+        document.getElementById('noButton').addEventListener('click', function () {
+            const noButton = this;
+            const container = document.querySelector('.container');
+            const containerRect = container.getBoundingClientRect();
+            const noButtonRect = noButton.getBoundingClientRect();
+
+            let randomX, randomY;
+
+            do {
+                randomX = Math.random() * (containerRect.width - noButtonRect.width);
+                randomY = Math.random() * (containerRect.height - noButtonRect.height - 80); // Adjust for padding
+            } while (randomX + noButtonRect.width > containerRect.width || randomY + noButtonRect.height > containerRect.height);
+
+            noButton.style.position = 'absolute';
+            noButton.style.left = `${randomX}px`;
+            noButton.style.top = `${randomY}px`;
+        });
+    </script>
+</body>
+</html>
